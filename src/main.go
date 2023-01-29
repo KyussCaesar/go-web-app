@@ -1,6 +1,8 @@
 package main
 
+import "github.com/kyusscaesar/go-web-app/app"
+
 func main() {
-	app := GetApplication()
+	app := app.GetApplication()
 	app.Run()
 }

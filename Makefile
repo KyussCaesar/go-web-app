@@ -7,7 +7,7 @@ setup: # ensure your local dev environment is set up
 	./setup.sh
 
 app:
-	cd src && go generate && go build -o ../
+	cd src/app && go generate && cd .. && go build -o ../
 
 client: openapi.yml # build the local client
 	npx @openapitools/openapi-generator-cli generate --generator-key go

@@ -4,18 +4,17 @@
 //go:build !wireinject
 // +build !wireinject
 
-package main
+package app
 
 import (
-	"github.com/kyusscaesar/go-web-app/app"
 	"github.com/kyusscaesar/go-web-app/userapi"
 )
 
-// Injectors from wire.go:
+// Injectors from app.injector.go:
 
-func GetApplication() app.Application {
-	engine := app.ProvideEngine()
+func GetApplication() Application {
+	engine := ProvideEngine()
 	userController := userapi.ProvideUserController()
-	application := app.ProvideApplication(engine, userController)
+	application := ProvideApplication(engine, userController)
 	return application
 }

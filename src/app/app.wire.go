@@ -6,7 +6,11 @@ import (
 )
 
 func ProvideEngine() *gin.Engine {
-	return gin.Default()
+	e := gin.Default()
+
+	e.SetTrustedProxies(nil)
+
+	return e
 }
 
 func ProvideApplication(e *gin.Engine, userController userapi.UserController) Application {

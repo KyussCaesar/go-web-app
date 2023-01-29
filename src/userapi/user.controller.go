@@ -1,6 +1,8 @@
 package userapi
 
 import (
+	"fmt"
+	"net/http"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,7 +21,8 @@ func (u *UserController) ConfigureRoutes(e *gin.Engine) {
 }
 
 func (u *UserController) CreateUser(c *gin.Context) {
-	c.AbortWithStatus(500)
+	fmt.Println("create user called")
+	c.AbortWithStatus(200)
 }
 
 func (u *UserController) UpdateUser(c *gin.Context) {
@@ -27,7 +30,8 @@ func (u *UserController) UpdateUser(c *gin.Context) {
 }
 
 func (u *UserController) GetUser(c *gin.Context) {
-	c.AbortWithStatus(500)
+	userId := c.Param("id")
+	c.String(http.StatusOK, "Hello %s", userId)
 }
 
 func (u *UserController) DeleteUser(c *gin.Context) {
