@@ -7,7 +7,7 @@
       "go": {
         "generatorName": "go",
         "input-spec": "openapi.yml",
-        "output": "#{cwd}/client",
+        "output": "#{cwd}/src/client",
         "additionalProperties": {
           "packageName": "client"
         }

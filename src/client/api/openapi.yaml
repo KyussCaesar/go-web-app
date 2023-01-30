@@ -1,0 +1,220 @@
+openapi: 3.0.0
+info:
+  description: |
+    Go Web App
+  title: Go Web App
+  version: 0.0.0
+servers:
+- url: /
+tags:
+- description: CRUD Users.
+  name: user
+- description: Monitoring
+  name: monitoring
+paths:
+  /healthcheck:
+    get:
+      description: |
+        Return 200 OK if the application is up.
+      operationId: healthcheck
+      responses:
+        "200":
+          description: OK
+      tags:
+      - monitoring
+  /metrics:
+    get:
+      description: |
+        Return Prometheus metrics.
+      operationId: metrics
+      responses:
+        "200":
+          content:
+            application/openmetrics-text:
+              schema:
+                type: string
+          description: OK
+      tags:
+      - monitoring
+  /user:
+    put:
+      description: Create user.
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ICreateUserDTO'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IUserDTO'
+          description: Created
+        "400":
+          description: Bad Request
+      summary: Create user.
+      tags:
+      - user
+  /user/{userId}:
+    delete:
+      description: Delete user.
+      operationId: deleteUser
+      parameters:
+      - description: The ID of the user to delete.
+        explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IUserDTO'
+          description: OK
+        "404":
+          description: Not Found
+      summary: Delete user.
+      tags:
+      - user
+    get:
+      description: Get user.
+      operationId: getUser
+      parameters:
+      - description: the ID of the user to get.
+        explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IUserDTO'
+          description: OK
+        "404":
+          description: Not Found
+      summary: Get user.
+      tags:
+      - user
+    post:
+      description: Update user.
+      operationId: updateUser
+      parameters:
+      - description: the ID of the user to get.
+        explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IUpdateUserDTO'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IUserDTO'
+          description: OK
+        "404":
+          description: Not Found
+        "400":
+          description: Bad Request
+      summary: Update user.
+      tags:
+      - user
+components:
+  schemas:
+    ICreateUserDTO:
+      example:
+        email: email
+        username: username
+      properties:
+        username:
+          description: |
+            Username.
+          type: string
+        email:
+          description: |
+            User email address.
+          format: email
+          type: string
+      required:
+      - email
+      - username
+      type: object
+    IUpdateUserDTO:
+      example:
+        email: email
+        username: username
+      properties:
+        username:
+          description: |
+            New value for the user's username.
+          type: string
+        email:
+          description: |
+            New value for the user's email.
+          type: string
+      type: object
+    IUserDTO:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        deletedAt: 2000-01-23T04:56:07.000+00:00
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        email: email
+        username: username
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: |
+            User ID
+          format: uuid
+          type: string
+        username:
+          description: |
+            Username.
+          type: string
+        email:
+          description: |
+            User email address.
+          format: email
+          type: string
+        createdAt:
+          description: DB-managed.
+          format: date-time
+          type: string
+        updatedAt:
+          description: DB-managed.
+          format: date-time
+          type: string
+        deletedAt:
+          description: DB-managed.
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - email
+      - id
+      - updatedAt
+      - username
+      type: object
