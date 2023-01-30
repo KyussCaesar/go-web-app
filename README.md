@@ -152,4 +152,4 @@ all the stuff for 1 API gets spread across so many different folders.
 - `src/<API-NAME>/*.service.go` services for the respective API.
 - `src/<API-NAME>/*.repository.go` repositories for the respective API.
 - `src/<API-NAME>/*.model.go` models for the respective API.
-
+- `src/<API-NAME>/*.error.go` errors for the respective API.

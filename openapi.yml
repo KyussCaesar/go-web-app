@@ -33,7 +33,7 @@ paths:
               schema:
                 type: string
   /user:
-    put:
+    post:
       tags: [user]
       operationId: createUser
       summary: Create user.
@@ -53,8 +53,10 @@ paths:
                 $ref: '#/components/schemas/IUserDTO'
         '400':
           description: Bad Request
+        '409':
+          description: Conflict (user already exists)
   /user/{userId}:
-    post:
+    put:
       tags: [user]
       operationId: updateUser
       summary: Update user.

@@ -2,8 +2,16 @@ package userapi
 
 import "github.com/google/wire"
 
-func ProvideUserController() UserController {
-	return NewUserController()
+func ProvideUserRepository() UserRepository {
+	return NewUserRepository()
 }
 
-var UserApiSet = wire.NewSet(ProvideUserController)
+func ProvideUserService(u *UserRepository) UserService {
+	return NewUserService(u)
+}
+
+func ProvideUserController(u *UserService) UserController {
+	return NewUserController(u)
+}
+
+var UserApiSet = wire.NewSet(ProvideUserService, ProvideUserController)
