@@ -1,7 +1,9 @@
 package app
 
 import (
+	"github.com/google/wire"
 	"github.com/gin-gonic/gin"
+	"github.com/kyusscaesar/go-web-app/monitoringapi"
 	"github.com/kyusscaesar/go-web-app/userapi"
 )
 
@@ -13,7 +15,8 @@ func ProvideEngine() *gin.Engine {
 	return e
 }
 
-func ProvideApplication(e *gin.Engine, userController userapi.UserController) Application {
+func ProvideApplication(e *gin.Engine, monitoringController monitoringapi.MonitoringController, userController userapi.UserController) Application {
+  monitoringController.ConfigureRoutes(e)
 	userController.ConfigureRoutes(e)
 
 	a := Application{
@@ -22,3 +25,5 @@ func ProvideApplication(e *gin.Engine, userController userapi.UserController) Ap
 
 	return a
 }
+
+var AppSet = wire.NewSet(ProvideEngine, ProvideApplication)
